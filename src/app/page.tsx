@@ -1,6 +1,7 @@
 import Button from "@/app/components/Button";
 
-export default function Home() {
+export default async function Home() {
+
   return (
     <div className="text-rose-400">
       Hello world!
