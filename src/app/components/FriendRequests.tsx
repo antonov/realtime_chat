@@ -17,12 +17,12 @@ const FriendRequests: React.FC<FriendRequestsProps> = ({
     )
     const router = useRouter();
     const acceptRequest = async (senderId: string) => {
-      axios.post('/api/requests/accept', {id: senderId});
+      await axios.post('/api/friends/accept', {id: senderId} );
       setFriendRequests((prev) => prev.filter((request) => request.senderId !== senderId));
       router.refresh();
     }
     const denyRequest = async (senderId: string) => {
-      axios.post('/api/requests/deny', {id: senderId});
+      await axios.post('/api/friends/deny', {id: senderId});
       setFriendRequests((prev) => prev.filter((request) => request.senderId !== senderId));
       router.refresh();
     }
@@ -36,10 +36,10 @@ const FriendRequests: React.FC<FriendRequestsProps> = ({
          <div key={request.senderId} className="flex gap-4 items-center">
            <UserPlus className="text-black"/>
            <p className="font-medium text-lg">{request.senderEmail}</p>
-           <button aria-label="Accept friend" className="w-8 h-8 bg-indigo-600 hover:bg-indigo-700 grid place-items-center rounded-full transition hover:shadow-md">
+           <button onClick={() => acceptRequest(request.senderId)} aria-label="Accept friend" className="w-8 h-8 bg-indigo-600 hover:bg-indigo-700 grid place-items-center rounded-full transition hover:shadow-md">
              <Check className="font-semibold text-white w-3/4 h-3/4"/>
            </button>
-           <button aria-label="Deny friend" className="w-8 h-8 bg-red-600 hover:bg-red-700 grid place-items-center rounded-full transition hover:shadow-md">
+           <button onClick={() => denyRequest(request.senderId)} aria-label="Deny friend" className="w-8 h-8 bg-red-600 hover:bg-red-700 grid place-items-center rounded-full transition hover:shadow-md">
              <X className="font-semibold text-white w-3/4 h-3/4"/>
            </button>
            <button></button>
